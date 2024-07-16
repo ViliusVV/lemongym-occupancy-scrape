@@ -1,5 +1,4 @@
 import datetime
-import json
 import time
 
 import requests
@@ -14,11 +13,6 @@ HEADERS = {
 }
 
 
-def save_response_to_file(response: requests.Response):
-    with open("response.html", "w", encoding="utf-8") as file:
-        file.write(response.text)
-
-
 def fetch_page() -> str:
     print("Sending request...")
     r = requests.get(TGT_URL, headers=HEADERS)
@@ -27,12 +21,6 @@ def fetch_page() -> str:
         print(f"Error: {r.status_code}, {r.text}")
 
     json_response = r.json()
-
-    # from file (testing)
-    # with open("response.html", "r", encoding="utf-8") as file:
-    #     response_text = file.read()
-    # json_response = json.loads(response_text)
-
     if not json_response["success"]:
         print(f"Success not true")
     elif not json_response["data"]["success"]:
@@ -42,7 +30,7 @@ def fetch_page() -> str:
 
 
 def parse_club(div) -> tuple[str, int]:
-    # find club name clubs-occupancy__club -> first div
+    # find club name clubs-occupancy__club -> first h6
     club_name = div.find("div", class_="clubs-occupancy__club").find("h6").text.strip()
 
     # find occupancy clubs-occupancy__percentage
