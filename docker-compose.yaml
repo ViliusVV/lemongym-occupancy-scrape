@@ -1,0 +1,11 @@
+services:
+  lemongym-scrape:
+    image: viliusvv/private:lemongym-scrape-latest
+    restart: always
+    volumes:
+      - ./data
+    logging:
+        driver: "json-file"
+        options:
+            max-size: "10m"
+            max-file: "3"

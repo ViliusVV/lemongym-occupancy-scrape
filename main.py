@@ -70,13 +70,16 @@ if __name__ == "__main__":
     while True:
         current_time = datetime.datetime.now()
         if (current_time - last_time).seconds > SCRAPE_INTERVAL:
-            print(f"\n\n========== Scraping at {current_time} ==============")
-            last_time = current_time
-            response = fetch_page()
-            occupancies = parse_page(response)
-            write_to_csv(occupancies)
-            for club, occupancy in occupancies.items():
-                print(f"{club}: {occupancy}")
+            try:
+                print(f"\n\n========== Scraping at {current_time} ==============")
+                last_time = current_time
+                response = fetch_page()
+                occupancies = parse_page(response)
+                write_to_csv(occupancies)
+                for club, occupancy in occupancies.items():
+                    print(f"{club}: {occupancy}")
+            except Exception as e:
+                print(f"Error: {e}")
 
             print("Sleeping.", end="")
         else:
