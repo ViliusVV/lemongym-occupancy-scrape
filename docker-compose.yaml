@@ -3,7 +3,7 @@ services:
     image: viliusvv/private:lemongym-scrape-latest
     restart: always
     volumes:
-      - ./data
+      - ./occupancies.csv:/app/occupancies.csv
     logging:
         driver: "json-file"
         options:
